@@ -13,7 +13,7 @@ fsd_files = dir(fullfile(features_folder, 'fourier shape descriptors', '*.mat'))
 hmd_files = dir(fullfile(features_folder, 'Hu moments descriptor', '*.mat'));
 
 %producing training data
-test_size = 4;
+test_size = 5;
 training_size = size(fsd_files,1) - test_size;
 no_features = 67;
 training_data = zeros(training_size,no_features);
@@ -27,7 +27,7 @@ for i = 1:size(fsd_files,1)
     load(fullfile(features_folder, 'fourier shape descriptors',fsd_files(i).name));
     load(fullfile(features_folder, 'Hu moments descriptor',hmd_files(i).name));
     
-    if mod(i,8) == 4
+    if mod(i,6) == 1
         test_data(counter, 1:60) = fsd;
         test_data(counter, 61:67) = M;
     else
@@ -40,7 +40,7 @@ for i = 1:size(fsd_files,1)
     feature_index = str2double(feature_split(1));
     for j = 1:length(labels)
         if feature_index == mapping(j)
-            if mod(i,8) == 4
+            if mod(i,6) == 1
                 test_label(counter) = labels(j);
                 counter = counter + 1;
             else
