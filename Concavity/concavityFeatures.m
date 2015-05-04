@@ -48,8 +48,8 @@ for f = 1:length(polys)
             
             % Compute Features
             % -------------------------------------------------------------------------
-            [bays] = extractConcavities(V);
-            [Area,Centroid,W,H] = bayFeatures(bays);
+            [chull,bays] = extractConcavities(V);
+            [Area,Centroid,W,H] = bayFeatures(chull,bays);
             % -------------------------------------------------------------------------
             
             conc = [];

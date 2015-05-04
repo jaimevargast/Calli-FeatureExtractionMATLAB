@@ -1,8 +1,10 @@
-function [bays] = extractConcavities(polygon)
+function [chull,bays] = extractConcavities(polygon)
     
     bays = {};
     
     K = convhull(polygon,'simplify',false);
+    
+    chull = polygon(K,:);
     
     dummy = [1:size(polygon,1)].';
     
