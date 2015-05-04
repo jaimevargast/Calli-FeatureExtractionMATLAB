@@ -12,7 +12,7 @@ C = [];
 
 chullArea = polygonArea(chull);
 
-threshold = 0.01;
+threshold = 0.005;
 
 for i = 1:size(bays,2)
     [c,a] = polygonCentroid(bays(i).x, bays(i).y);
