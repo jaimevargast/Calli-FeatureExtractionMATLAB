@@ -1,6 +1,6 @@
 function extractTranslationBatch_fromHPGL(directory)
 
-load('/data/synthetic s/RefS.mat');  %%% REFERENCE S
+load('/letters and features/s/RefS.mat');  %%% REFERENCE S
 
 mkdir(directory,'keypoint descriptors');
 savepath = strcat(directory,'/keypoint descriptors/');
