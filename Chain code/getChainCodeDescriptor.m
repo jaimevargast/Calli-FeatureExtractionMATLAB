@@ -1,8 +1,8 @@
 clear all
 close all
 
-input_folder = '..\letters and features\synthetic s';
-output_folder = '..\letters and features\synthetic s\Chain code';
+input_folder = '..\letters and features\s';
+output_folder = '..\letters and features\s\Chain code';
 shapes_files = dir(fullfile(input_folder, '*.png'));
 
 for file_ind = 1:size(shapes_files,1)

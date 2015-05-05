@@ -4,7 +4,7 @@ function concavityFeatures(directory)
 mkdir(directory,'concavity descriptors');
 savepath = strcat(directory,'/concavity descriptors/');
 
-polys = dir(directory);
+polys = dir(strcat(directory,'polygons\'));
 
 for f = 1:length(polys)
     
@@ -15,7 +15,7 @@ for f = 1:length(polys)
     % Load the polygon instance
     if(strcmp(ext,'.mat'))
         
-        source = strcat(name,ext);
+        source = strcat(directory,'polygons\',name,ext);
         feat_saveas = strcat(savepath,name,'_conc.mat');
         
         

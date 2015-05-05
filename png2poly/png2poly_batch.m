@@ -2,6 +2,7 @@ function png2poly_batch(directory)
 % png2poly_batch - Extracts boundaries of letter forms from PNG files as a
 % polygon
 
+mkdir(directory,'polygons');
 smooth_iter = 2;
 max_points = 400;
 

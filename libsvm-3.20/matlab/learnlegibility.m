@@ -3,7 +3,7 @@ close all
 
 [training_label, training_data] = libsvmread('traindata.txt');
 [test_label, test_data] = libsvmread('testdata.txt');
-load('..\..\letters and features\synthetic s\selected_features.mat');
+load('..\..\letters and features\s\selected_features.mat');
 
 sel_features = find(selected_features);
 training_data_selected = training_data(:, sel_features);
@@ -13,14 +13,16 @@ min_err = flintmax;
 min_gamma = 1;
 min_cost = 1;
 
+size_training = length(training_label);
+
 for i = -15:2:15
     gamma = 2^i;    
     for j = -15:2:15
         cost = 2^j;
-        param = ['-s 3 -t 2 -g ', num2str(gamma), ' -c ', num2str(cost), ' -p 0.1 -v 25 -q'];
-        svr_model = svmtrain(training_label, training_data, param);
-        if svr_model < min_err
-            min_err = svr_model;
+        param = ['-s 3 -t 2 -g ', num2str(gamma), ' -c ', num2str(cost), ' -p 0.1 -v 24 -q'];
+        err = svmtrain(training_label, training_data, param);
+        if err < min_err
+            min_err = err;
             min_gamma = gamma;
             min_cost = cost;
         end
@@ -42,10 +44,10 @@ for i = -15:2:15
     gamma = 2^i;    
     for j = -15:2:15
         cost = 2^j;
-        param = ['-s 3 -t 2 -g ', num2str(gamma), ' -c ', num2str(cost), ' -p 0.1 -v 26 -q'];
-        svr_model = svmtrain(training_label, training_data_selected, param);
-        if svr_model < min_err
-            min_err = svr_model;
+        param = ['-s 3 -t 2 -g ', num2str(gamma), ' -c ', num2str(cost), ' -p 0.1 -v 24 -q'];
+        err = svmtrain(training_label, training_data_selected, param);
+        if err < min_err
+            min_err = err;
             min_gamma = gamma;
             min_cost = cost;
         end

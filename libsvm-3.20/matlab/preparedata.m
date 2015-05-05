@@ -2,22 +2,23 @@ clear all
 close all
 
 labels_folder = '..\..\labels';
-features_folder = '..\..\letters and features\synthetic s';
-labels_file = 's_synthetic.mat';
-mapping_file = 'mapping_s_synthetic.mat';
+features_folder = '..\..\letters and features\s';
+labels_file = 'scores_s.mat';
+mapping_file = 'mapping_scores_s.mat';
 
 % loading lables, mapping, features
 load(fullfile(labels_folder, labels_file));
 load(fullfile(labels_folder, mapping_file));
-fsd_files = dir(fullfile(features_folder, 'fourier shape descriptors', '*.mat'));
-hmd_files = dir(fullfile(features_folder, 'Hu moments descriptor', '*.mat'));
-cc_files = dir(fullfile(features_folder, 'Chain code', '*.mat'));
-concavity_files = dir(fullfile(features_folder, 'concavity descriptors', '*.mat'));
+fsd_files = dir(fullfile(features_folder, 'fourier shape descriptors', '*.mat')); %60
+hmd_files = dir(fullfile(features_folder, 'Hu moments descriptor', '*.mat')); %7
+cc_files = dir(fullfile(features_folder, 'Chain code', '*.mat')); %50
+kp_files = dir(fullfile(features_folder, 'keypoint descriptors', '*.mat')); %208
+concavity_files = dir(fullfile(features_folder, 'concavity descriptors', '*.mat')); %25
 
 %producing training data
-test_size = 6;
+test_size = 4;
 training_size = size(fsd_files,1) - test_size;
-no_features = 142;
+no_features = 350 - 25;
 training_data = zeros(training_size,no_features);
 training_label = zeros(training_size,1);
 test_data = zeros(test_size,no_features);
@@ -27,24 +28,27 @@ all_label = zeros(training_size + test_size, 1);
 
 counter = 1;
 
-for i = 1:size(fsd_files,1)
+for i = 1:size(kp_files,1)
     load(fullfile(features_folder, 'fourier shape descriptors',fsd_files(i).name));
     load(fullfile(features_folder, 'Hu moments descriptor',hmd_files(i).name));
     load(fullfile(features_folder, 'Chain code',cc_files(i).name));
-    load(fullfile(features_folder, 'concavity descriptors',concavity_files(i).name));
+    load(fullfile(features_folder, 'keypoint descriptors',kp_files(i).name));
+%     load(fullfile(features_folder, 'concavity descriptors',concavity_files(i).name));
     
-    if mod(i,5) == 1
+    if mod(i,8) == 1
         test_data(counter, 1:60) = fsd;
-        test_data(counter, 61:85) = conc;
-        test_data(counter, 86:92) = M;
-        test_data(counter, 93:142) = cc_sampled;
+        test_data(counter, 61:67) = M;
+        test_data(counter, 68:117) = cc_sampled;
+        test_data(counter, 118:325) = tr;
+%         test_data(counter, 326:350) = conc;
         all_data(i, :) = test_data(counter, :);
         hmd_files(i).name
     else
         training_data(i - counter + 1, 1:60) = fsd;
-        training_data(i - counter + 1, 61:85) = conc;
-        training_data(i - counter + 1, 86:92) = M;
-        training_data(i - counter + 1, 93:142) = cc_sampled;
+        training_data(i - counter + 1, 61:67) = M;
+        training_data(i - counter + 1, 68:117) = cc_sampled;
+        training_data(i - counter + 1, 118:325) = tr;
+%         training_data(i - counter + 1, 326:350) = conc;
         all_data(i, :) = training_data(i - counter + 1, :);
     end
     
@@ -53,7 +57,7 @@ for i = 1:size(fsd_files,1)
     feature_index = str2double(feature_split(1));
     for j = 1:length(labels)
         if feature_index == mapping(j)
-            if mod(i,5) == 1
+            if mod(i,8) == 1
                 test_label(counter) = labels(j);
                 counter = counter + 1;
             else

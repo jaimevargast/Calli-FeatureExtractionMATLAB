@@ -9,7 +9,7 @@ bNormaliseOrientationState = 0;
 mkdir(directory,'fourier shape descriptors');
 savepath = strcat(directory,'/fourier shape descriptors/');
 
-polys = dir(directory);
+polys = dir(strcat(directory, 'polygons\'));
 
 %aux = struct('x',[],'y',[],'hole',[]);
 
@@ -25,7 +25,7 @@ for f = 1:length(polys)
         source = strcat(name,ext);
         fsd_saveas = strcat(savepath,name,'_fsd.mat');
         
-        load(source);
+        load(strcat(directory, 'polygons\',source));
         
         if exist('polygon','var')
             outline = [polygon(1).x polygon(1).y];
