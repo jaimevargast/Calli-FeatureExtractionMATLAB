@@ -1,4 +1,6 @@
-function extractTranslationBatch(directory)
+function extractTranslationBatch_fromHPGL(directory)
+
+load('/data/synthetic s/RefS.mat');  %%% REFERENCE S
 
 mkdir(directory,'keypoint descriptors');
 savepath = strcat(directory,'/keypoint descriptors/');
@@ -14,10 +16,13 @@ for f = 1:length(polys)
     % Load the polygon instance
     if(strcmp(ext,'.mat'))
         
-        source = strcat(name,ext);
+        source = strcat(directory,name,ext);
         feat_saveas = strcat(savepath,name,'_key.mat');
         
         load(source);
+        
+        smoothed_V2 = circshift(smoothed_V2,-1); % to line up the points      
+        
         
         % Scaling and centering procedure [ORIGINAL MESH]
         % -------------------------------------------------------------------------
@@ -71,7 +76,7 @@ for f = 1:length(polys)
         end
         
         Ref = scaled_originalV(Key_ix,:);
-        Moving = scaled_deformedV(Key_ix,:);
+        Moving = scaled_deformedV; %already has 104 points
         %--------------------------------------------------------------------------
         
         %Compute translation
@@ -80,12 +85,55 @@ for f = 1:length(polys)
         %--------------------------------------------------------------------------
         dummy = [];
         for row = 1:size(tr,1)
-            dummy = [dummy tr(row,:)];                
+            dummy = [dummy tr(row,:)];
         end
         
         tr = dummy;
         
-        save(feat_saveas,'tr');        
+        
+        %Visualize
+        colors = ['y','m','c','r','g','b'];
+        
+        figure;
+        subplot(1,2,1);
+        drawPolygon(scaled_originalV(lettermesh.bnd_V,:));
+        hold on;
+        
+        subplot(1,2,2);
+        drawPolygon(Moving);
+        hold on;
+        
+        b = num2str([1:length(Moving)]');
+        b = cellstr(b);
+        dx = 0.01; dy = 0.01; % displacement so the text does not overlay the data points
+        
+        for i=1:length(Moving)
+            cix = mod(i,6); %color index
+            if cix==0
+                cix=6;
+            end
+            subplot(1,2,1);
+            scatter(Ref(i,1),Ref(i,2),'Marker','d','MarkerFaceColor',colors(cix));
+            if (mod(i,5)==0)||(i==1)
+                text(Ref(i,1)+dx,Ref(i,2)+dy,b(i),'FontSize',10);
+            end
+            
+            subplot(1,2,2);
+            scatter(Moving(i,1),Moving(i,2),'Marker','o','MarkerFaceColor',colors(cix));
+            if (mod(i,5)==0)||(i==1)
+                text(Moving(i,1)+dx,Moving(i,2)+dy,b(i),'FontSize',10);
+            end
+        end
+        
+        subplot(1,2,1);
+        hold off;
+        
+        subplot (1,2,2);
+        hold off;
+        
+        % SAVE
+        % -----------------------------------------------------------------
+        save(feat_saveas,'tr');
     end
 end
 end

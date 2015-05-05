@@ -1,5 +1,8 @@
 clear all;
-load('E:\dev\Calli-FeatureExtractionMATLAB\letters and features\s\1.mat')
+load('/data/synthetic s/RefS.mat');
+load('/data/synthetic s/hpgl/26.mat');
+
+smoothed_V2 = circshift(smoothed_V2,-1);
 
 % Scaling and centering procedure [ORIGINAL MESH]
 % -------------------------------------------------------------------------
@@ -53,7 +56,7 @@ for i = 1:length(lettermesh.bnd_V)
 end
 
 Ref = scaled_originalV(Key_ix,:);
-Moving = scaled_deformedV(Key_ix,:);
+Moving = scaled_deformedV; %already has 104 points
 %--------------------------------------------------------------------------
 
 %Compute translation
@@ -70,7 +73,7 @@ drawPolygon(scaled_originalV(lettermesh.bnd_V,:));
 hold on;
 
 subplot(1,2,2);
-drawPolygon(scaled_deformedV(lettermesh.bnd_V,:));
+drawPolygon(Moving);
 hold on;
 
 b = num2str([1:length(Moving)]');
@@ -96,9 +99,11 @@ for i=1:length(Moving)
 end
 
 subplot(1,2,1);
+axis equal;
 hold off;
 
 subplot (1,2,2);
+axis equal;
 hold off;
 
 
