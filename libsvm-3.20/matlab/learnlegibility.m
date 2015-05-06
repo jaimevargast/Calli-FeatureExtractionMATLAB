@@ -1,9 +1,13 @@
 clear all
 close all
 
-[training_label, training_data] = libsvmread('traindata.txt');
-[test_label, test_data] = libsvmread('testdata.txt');
-load('..\..\letters and features\s\selected_features.mat');
+load('..\..\letters and features\synthetic s\selected_features.mat');
+svmdata_dir = 'SVMData\';
+svmdata_file = 's_synthetic_svmdata.txt';
+test_indices = [4, 10, 16, 22, 28];
+
+[training_label, training_data, test_label, test_data] ...
+    = prepare_train_test(svmdata_file, svmdata_dir, test_indices);
 
 sel_features = find(selected_features);
 training_data_selected = training_data(:, sel_features);
@@ -19,7 +23,7 @@ for i = -15:2:15
     gamma = 2^i;    
     for j = -15:2:15
         cost = 2^j;
-        param = ['-s 3 -t 2 -g ', num2str(gamma), ' -c ', num2str(cost), ' -p 0.1 -v 24 -q'];
+        param = ['-s 3 -t 2 -g ', num2str(gamma), ' -c ', num2str(cost), ' -p 0.1 -v 25 -q'];
         err = svmtrain(training_label, training_data, param);
         if err < min_err
             min_err = err;
@@ -44,7 +48,7 @@ for i = -15:2:15
     gamma = 2^i;    
     for j = -15:2:15
         cost = 2^j;
-        param = ['-s 3 -t 2 -g ', num2str(gamma), ' -c ', num2str(cost), ' -p 0.1 -v 24 -q'];
+        param = ['-s 3 -t 2 -g ', num2str(gamma), ' -c ', num2str(cost), ' -p 0.1 -v 25 -q'];
         err = svmtrain(training_label, training_data_selected, param);
         if err < min_err
             min_err = err;

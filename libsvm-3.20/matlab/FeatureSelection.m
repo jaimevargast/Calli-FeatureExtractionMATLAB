@@ -1,7 +1,9 @@
 clear all
 close all
 
-[all_label, all_data] = libsvmread('alldata.txt');
+svmdata_dir = 'SVMData\';
+svmdata_file = 's_synthetic_svmdata.txt';
+[all_label, all_data] = libsvmread(strcat(svmdata_dir, svmdata_file));
 
 param = ['-s 3 -t 2 -g ', num2str(0.5), ' -c ', num2str(0.5), ' -p 0.1 -q'];
 
@@ -15,10 +17,10 @@ SVRwrapper = @(training_x, training_y, test_x, test_y)...
 % also depends on the input test set
 X = all_data;
 Y = all_label;
-[selected_features, his] = sequentialfs(SVRwrapper, X, Y, 'cv',30);
+[selected_features, his] = sequentialfs(SVRwrapper, X, Y, 'cv', 30);
 sel_features = find(selected_features);
 
-save('..\..\letters and features\s\selected_features.mat', 'selected_features');
+save('..\..\letters and features\synthetic s\selected_features.mat', 'selected_features');
 
 
 
