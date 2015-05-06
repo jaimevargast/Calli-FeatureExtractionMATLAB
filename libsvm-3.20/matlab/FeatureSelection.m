@@ -13,8 +13,7 @@ SVRwrapper = @(training_x, training_y, test_x, test_y)...
 
 % feature selection
 % remember that for feature selection, you need to do leave-one-out,
-% otherwise, everytime you run, you get different features selected, it
-% also depends on the input test set
+% otherwise, everytime you run, you get different features selected
 X = all_data;
 Y = all_label;
 [selected_features, his] = sequentialfs(SVRwrapper, X, Y, 'cv', 30);

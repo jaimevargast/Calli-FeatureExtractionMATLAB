@@ -4,7 +4,7 @@ close all
 load('..\..\letters and features\synthetic s\selected_features.mat');
 svmdata_dir = 'SVMData\';
 svmdata_file = 's_synthetic_svmdata.txt';
-test_indices = [4, 10, 16, 22, 28];
+test_indices = [3, 9, 15, 21, 27];
 
 [training_label, training_data, test_label, test_data] ...
     = prepare_train_test(svmdata_file, svmdata_dir, test_indices);
