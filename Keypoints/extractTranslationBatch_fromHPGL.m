@@ -1,6 +1,6 @@
 function extractTranslationBatch_fromHPGL(directory)
 
-load('/letters and features/c/ref_c.mat');  %%% REFERENCE S
+load('/letters and features/s/RefS.mat');  %%% REFERENCE S
 
 mkdir(directory,'keypoint descriptors');
 savepath = strcat(directory,'/keypoint descriptors/');
@@ -70,7 +70,7 @@ for f = 1:length(polys)
         Key_ix = [];
         
         for i = 1:length(lettermesh.bnd_V)
-            if (mod(i,3)==0)||(i==1)
+            if mod(i,3)==0
                 Key_ix = [Key_ix; lettermesh.bnd_V(i)];
             end
         end
