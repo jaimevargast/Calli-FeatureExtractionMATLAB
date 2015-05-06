@@ -37,21 +37,21 @@ fclose(hpgl_file_handle);
 % Hacky resampling to match original mesh used for "S"
 poly = [];
 
-%top side = 12 points
+%top side = 7 points
 poly_aux = cell2mat(PolySegment(1));
-poly = [poly; resamplePolyline(poly_aux,12)];
+poly = [poly; resamplePolyline(poly_aux,7)];
 
-%right side = 45 points
+%right side = 13 points
 poly_aux = cell2mat(PolySegment(2));
-poly = [poly; resamplePolyline(poly_aux,45)];
+poly = [poly; resamplePolyline(poly_aux,13)];
 
-%bottom side = 12 points
+%bottom side = 7 points
 poly_aux = cell2mat(PolySegment(3));
-poly = [poly; resamplePolyline(poly_aux,12)];
+poly = [poly; resamplePolyline(poly_aux,7)];
 
-%left side = 39 points
+%left side = 65 points
 poly_aux = cell2mat(PolySegment(4));
-poly = [poly; resamplePolyline(poly_aux,39)];
+poly = [poly; resamplePolyline(poly_aux,65)];
 
 % remove duplicate vertices
 poly = unique(poly,'rows','stable');

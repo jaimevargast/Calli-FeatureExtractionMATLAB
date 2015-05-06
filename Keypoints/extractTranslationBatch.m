@@ -65,7 +65,7 @@ for f = 1:length(polys)
         Key_ix = [];
         
         for i = 1:length(lettermesh.bnd_V)
-            if mod(i,3)==0
+            if (mod(i,3)==0)||(i==1)
                 Key_ix = [Key_ix; lettermesh.bnd_V(i)];
             end
         end

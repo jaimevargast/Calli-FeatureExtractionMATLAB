@@ -12,7 +12,8 @@ for f = 1:length(polys)
     
     % Parse the hpgl file
     if(strcmp(ext,'.plt'))
-        [smoothed_V2] = readHPGLboundary(strcat(pathstr,name,ext)) ;
+        f = strcat(directory,name,ext);
+        [smoothed_V2] = readHPGLboundary(f) ;
         feat_saveas = strcat(savepath,name,'.mat');
         % SAVE        
         save(feat_saveas,'smoothed_V2');
