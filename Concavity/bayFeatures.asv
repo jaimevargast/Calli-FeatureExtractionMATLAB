@@ -1,16 +1,10 @@
-function ft_vector = bayFeatures(chull,bays,visualize)
+function ft_vector = bayFeatures(chull,bays)
 
     % clear all;
     % clf;
     % load('E:\dev\Calli-FeatureExtractionMATLAB\letters and features\s\polygons\2.mat')
 
-    if(visualize)
-        figure;
-    end
-    
-    
     ft_vector = zeros(12,6);    
-    
 
     %Compute centroid and area of convex hull
     [chull_c,chull_a] = polygonCentroid(chull(:,1),chull(:,2));
@@ -92,31 +86,26 @@ function ft_vector = bayFeatures(chull,bays,visualize)
 
 
         %Visualize
-        if(visualize)            
-            X = bays(i).x';
-            Y = bays(i).y';
-            hold on;
-            patch(X,Y,'g');
-            scatter(mp(1),mp(2),'o','MarkerFaceColor','red');
-            drawPolygon(bbox);
-            %hold off;
-        end
+        X = bays(i).x';
+        Y = bays(i).y';
+        hold on;
+        patch(X,Y,'g');
+        scatter(mp(1),mp(2),'o','MarkerFaceColor','red');
+        drawPolygon(bbox);
+        hold off;
 
 
     end
 
     %DEFINE AND VISUALIZE RADIAL AXES
     RX = [(0) (pi/6) (pi/3) (pi/2) (2*pi/3) (5*pi/6) (pi) (7*pi/6) (4*pi/3) (3*pi/2) (5*pi/3) (11*pi/6) (2*pi)]';
-    
-    if(visualize)
-        %hold on;
-        axis([-2 2 -2 2]);
-        for i = 1:length(RX)-1
-            ray = createRay([0,0],RX(i));
-            drawRay(ray,'LineStyle',':');
-        end
-        hold off;
+    hold on;
+    axis([-2 2 -2 2]);
+    for i = 1:length(RX)-1
+        ray = createRay([0,0],RX(i));
+        drawRay(ray,'LineStyle',':');
     end
+    hold off;
 
     for i = 1:length(RX)-1
         %find candidates

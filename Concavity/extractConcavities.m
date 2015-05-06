@@ -2,12 +2,12 @@ function [chull,bays] = extractConcavities(polygon)
     
     bays = {};
     
-    K = convhull(polygon,'simplify',false);
-    
+    % Compute Convex Hull and save it as a polygon
+    K = convhull(polygon,'simplify',false);   
     chull = polygon(K,:);
     
+    %% Substract Convex hull from original polygon to obtain individual bays
     dummy = [1:size(polygon,1)].';
-    
     [bay_indices,ps] = removerows(dummy,'ind',K);
     
     count = 1;
