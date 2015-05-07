@@ -1,12 +1,12 @@
-clear all
-close all
+% clear all
+% close all
 
 load('..\..\letters and features\synthetic s\selected_features.mat');
 svmdata_dir = 'SVMData\';
 svmdata_file = 's_synthetic_svmdata.txt';
-test_indices = [3, 9, 15, 21, 27];
+test_indices = [6, 12, 18, 24, 30];
 
-[training_label, training_data, test_label, test_data] ...
+[training_label, training_data, test_label, test_data, max_features, min_features] ...
     = prepare_train_test(svmdata_file, svmdata_dir, test_indices);
 
 sel_features = find(selected_features);

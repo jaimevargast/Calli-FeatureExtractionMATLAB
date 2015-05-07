@@ -1,5 +1,5 @@
-clear all
-close all
+% clear all
+% close all
 
 svmdata_dir = 'SVMData\';
 svmdata_file = 's_synthetic_svmdata.txt';
