@@ -15,6 +15,7 @@ for f = 1:length(polys)
     if(strcmp(ext,'.mat'))
         
         source = strcat(folder,'polygons\',name,ext);
+        name
         feat_saveas = strcat(savepath,name,'_cchist.mat');
         
         load(source);
@@ -22,7 +23,7 @@ for f = 1:length(polys)
         if exist('polygon','var')
             
             P = [polygon(1).x polygon(1).y];
-            cc_hist = polyChaincodeHistogram(P);           
+            cc_hist = polyChaincodeHistogram(P,0);           
             save(feat_saveas,'cc_hist');
         end
     end
