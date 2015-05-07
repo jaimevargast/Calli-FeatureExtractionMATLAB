@@ -92,10 +92,27 @@ function cc_hist = polyChaincodeHistogram(polygon,visualize);
 
             % extract histogram
             if ~isempty(cc)
-                out = histc(cc(:),bin_edges);
-                if~iscolumn(out) % for some reason histc function sometimes returns output as row vector
-                    out = out';
-                end
+                out = [];
+                aux = find(cc==0);
+                out = [out; size(aux,1)];
+                aux = find(cc==1);
+                out = [out; size(aux,1)];
+                aux = find(cc==2);
+                out = [out; size(aux,1)];
+                aux = find(cc==3);
+                out = [out; size(aux,1)];
+                aux = find(cc==4);
+                out = [out; size(aux,1)];
+                aux = find(cc==5);
+                out = [out; size(aux,1)];
+                aux = find(cc==6);
+                out = [out; size(aux,1)];
+                aux = find(cc==7);
+                out = [out; size(aux,1)];
+%                 out = histc(cc(:),bin_edges);
+%                 if~iscolumn(out) % for some reason histc function sometimes returns output as row vector
+%                     out = out';
+%                 end
                 grid_cell{iy,ix} = out;
             else
                 grid_cell{iy,ix} = [0;0;0;0;0;0;0;0];
@@ -103,7 +120,7 @@ function cc_hist = polyChaincodeHistogram(polygon,visualize);
             
             % ----------------------------------------------------------------------
             if (visualize)
-                li = sub2ind([4 8],iy,ix);
+                li = sub2ind([4 4],ix,iy);
                 subplot(8,4,li);
                 h = grid_cell{iy,ix};
                 bar(h);
