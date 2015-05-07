@@ -17,7 +17,7 @@ function ft_vector = bayFeatures(chull,bays,visualize)
     threshold = 0.005;
 
     MP = [];    %base midpoints IN POLAR
-    BBOX = [];  %bounding boxes
+    BBOX = {};  %bounding boxes
     C = [];     %centroids
     W = [];     %widths
     H = [];     %heights
@@ -64,6 +64,7 @@ function ft_vector = bayFeatures(chull,bays,visualize)
         %Apply inverse transformation to Bbox
         bbox = transformPointsInverse(tform2,bbox);
         bbox = transformPointsInverse(tform1,bbox);
+        BBOX = [BBOX; bbox];
 
         %Width and height of bounding box
         h = max(bbox(:,2)) - min(bbox(:,2));
@@ -79,28 +80,13 @@ function ft_vector = bayFeatures(chull,bays,visualize)
         if th<0
             th = (2*pi)+th;
         end
-        bay_centroid = [th rho];
+        bc = [th rho];
         solidity = bay_area/bb_area;
         S = [S; solidity];
-        C = [C; bay_centroid];
+        C = [C; bc];
         %bay area/chull area
         a= bay_area/chull_a;
-        A = [A; a];
-
-
-
-
-
-        %Visualize
-        if(visualize)            
-            X = bays(i).x';
-            Y = bays(i).y';
-            hold on;
-            patch(X,Y,'g');
-            scatter(mp(1),mp(2),'o','MarkerFaceColor','red');
-            drawPolygon(bbox);
-            %hold off;
-        end
+        A = [A; a];    
 
 
     end
@@ -109,7 +95,7 @@ function ft_vector = bayFeatures(chull,bays,visualize)
     RX = [(0) (pi/6) (pi/3) (pi/2) (2*pi/3) (5*pi/6) (pi) (7*pi/6) (4*pi/3) (3*pi/2) (5*pi/3) (11*pi/6) (2*pi)]';
     
     if(visualize)
-        %hold on;
+        hold on;
         axis([-2 2 -2 2]);
         for i = 1:length(RX)-1
             ray = createRay([0,0],RX(i));
@@ -133,9 +119,23 @@ function ft_vector = bayFeatures(chull,bays,visualize)
         if ~(isempty(I))
             if (A(I)<threshold)
                 ft_vector(i,:) = [0 0 0 0 0 0];
-            else
+            else %selected
                 ru = [C(I,:) W(I) H(I) A(I) S(I)];
                 ft_vector(i,:) = ru;
+                
+                %Visualize
+                if(visualize)            
+                    X = bays(I).x';
+                    Y = bays(I).y';
+                    hold on;            
+                    patch(X,Y,'g');
+                    [mpx,mpy] = pol2cart(MP(I,1),MP(I,2));
+                    [cx,cy] = pol2cart(C(I,1),C(I,2));
+                    scatter(mpx,mpy,'o','MarkerFaceColor','red');
+                    scatter(cx,cy,'o','MarkerFaceColor','blue');
+                    drawPolygon(BBOX(I));
+                    hold off;
+                end
             end
         else
             ft_vector(i,:) = [0 0 0 0 0 0];
@@ -143,10 +143,10 @@ function ft_vector = bayFeatures(chull,bays,visualize)
     end
 
     %Reshape feature vector
-    dummy = [];
-    for row = 1:size(ft_vector,1)
-        dummy = [dummy ft_vector(row,:)];
-    end
-    ft_vector = dummy;
+     dummy = [];
+     for row = 1:size(ft_vector,1)
+         dummy = [dummy ft_vector(row,:)];
+     end
+     ft_vector = dummy;
     
 end
