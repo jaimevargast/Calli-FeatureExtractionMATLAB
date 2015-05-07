@@ -8,8 +8,9 @@ function cc_hist = polyChaincodeHistogram(polygon);
 
     polygon = scalePolyConstrained(polygon); %in case sampling moves some point beyond range
 
-    %drawPolygon(polygon,'Marker','.');
-    %axis equal;
+    drawPolygon(polygon,'Marker','.');
+    axis ([-1 1 -1 1]);
+    hold on;
 
     P1 = polygon;
     P2 = circshift(polygon,[-1 0]);
@@ -17,6 +18,16 @@ function cc_hist = polyChaincodeHistogram(polygon);
     % construct grid
     gxx = linspace(-1,1,5)';
     gyy = linspace(1,-1,5)';
+    
+    for i = 1:numel(gxx)
+        ray = createRay([gxx(i) gyy(1)],[gxx(i) gyy(2)]);
+        ray2 = createRay([gxx(1) gyy(i)],[gxx(2) gyy(i)]);
+        drawRay(ray);
+        drawRay(ray2);
+    end
+        
+    
+    
 
     grid_cell = cell(4,4);
 
@@ -46,10 +57,10 @@ function cc_hist = polyChaincodeHistogram(polygon);
 
             % extract histogram
             if ~isempty(cc)
-                out = histcounts(cc(:),bin_edges);
-                grid_cell{ix,iy} = out;
+                out = histc(cc(:),bin_edges);
+                grid_cell{iy,ix} = out;
             else
-                grid_cell{ix,iy} = [0,0,0,0,0,0,0,0];
+                grid_cell{iy,ix} = [0,0,0,0,0,0,0,0];
             end          
         end
     end
