@@ -1,7 +1,7 @@
 function [training_label, training_data, test_label, ...
-    test_data, max_features, min_features] = prepare_train_test(svmdata_file, svmdata_dir, test_indices)
+    test_data, max_features, min_features] = prepare_train_test(all_data, all_label, test_indices)
 
-[all_label, all_data] = libsvmread(strcat(svmdata_dir, svmdata_file));
+% [all_label, all_data] = libsvmread(strcat(svmdata_dir, svmdata_file));
 
 no_features = size(all_data, 2);
 data_size = size(all_data, 1);

@@ -19,7 +19,7 @@ Y = all_label;
 [selected_features, his] = sequentialfs(SVRwrapper, X, Y, 'cv', 30);
 sel_features = find(selected_features);
 
-save('..\..\letters and features\synthetic s\selected_features.mat', 'selected_features');
+save('..\..\data\synthetic s\selected_features.mat', 'selected_features');
 
 
 
