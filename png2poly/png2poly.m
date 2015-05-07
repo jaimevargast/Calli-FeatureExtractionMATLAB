@@ -23,22 +23,25 @@ function [poly] = png2poly(filename,smooth_iters,max_points)
 %
 
 
-%   % read in .png file with alpha layer
-%   [img,map,alpha] = imread(filename);
-%   % let shape be area with alpha > 128
-%   alpha = 255*( alpha > 128);
-%   % get polygon from alpha mask
-%   poly = mask2poly(alpha);
-
-% Changed this to work with non transparent PNGs, this function now
-% thresholds the image and converts it to binary black/white
-
+%=========================================================================
+% USE THIS IF USING ALPHA LAYER AS MASK (i.e. transparent png)
+%=========================================================================
+% read in .png file with alpha layer
+%    [img,map,alpha] = imread(filename);
+% let shape be area with alpha > 128
+%    alpha = 255*( alpha > 128);
+% get polygon from alpha mask
+%    poly = mask2poly(alpha);
+%=========================================================================
+% USE THIS IF USING *INVERTED* BLACK/WHITE IMAGE
+%=========================================================================
+% Thresholds the image and converts it to binary black/white
 img = imread(filename);
 gray = rgb2gray(img);
 level = graythresh(gray);
 alpha = im2bw(gray,level);
-
 poly = mask2poly(alpha);
+%=========================================================================
 
 if exist('smooth_iters','var')
     % handle smooth of each component separately, *before* finding hole positions
