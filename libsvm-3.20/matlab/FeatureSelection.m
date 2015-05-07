@@ -1,9 +1,4 @@
-% clear all
-% close all
-
-svmdata_dir = 'SVMData\';
-svmdata_file = 's_synthetic_svmdata.txt';
-[all_label, all_data] = libsvmread(strcat(svmdata_dir, svmdata_file));
+function [sel_features] = FeatureSelection(all_data, all_label)
 
 param = ['-s 3 -t 2 -g ', num2str(0.5), ' -c ', num2str(0.5), ' -p 0.1 -q'];
 
@@ -19,7 +14,5 @@ Y = all_label;
 [selected_features, his] = sequentialfs(SVRwrapper, X, Y, 'cv', 30);
 sel_features = find(selected_features);
 
-save('..\..\data\synthetic s\selected_features.mat', 'selected_features');
-
-
+end
 

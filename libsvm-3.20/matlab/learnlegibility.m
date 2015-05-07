@@ -1,15 +1,15 @@
 function [svr_model, svr_model_sel] = ...
-    learnlegibility(sel_features_file, training_label, training_data)
+    learnlegibility(sel_features, training_label, training_data)
 
 % clear all
 % close all
 
-load(sel_features_file);
+% load(sel_features_file);
 
 % [training_label, training_data, test_label, test_data, max_features, min_features] ...
 %     = prepare_train_test(svmdata_file, svmdata_dir, test_indices);
 
-sel_features = find(selected_features);
+% sel_features = find(selected_features);
 training_data_selected = training_data(:, sel_features);
 
 min_err = flintmax;

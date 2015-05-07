@@ -1,4 +1,4 @@
-function [] = preparedata(labels_folder, features_folder, output_folder, labels_file, mapping_file, output_file)
+function [] = aggregate_svmdata(labels_folder, features_folder, output_folder, labels_file, mapping_file, output_file)
 
 % clear all
 % close all
@@ -11,7 +11,8 @@ hmd_files = dir(fullfile(features_folder, 'Hu moments descriptor', '*.mat')); %7
 cc_files = dir(fullfile(features_folder, 'Chain code', '*.mat')); %50
 kp_files = dir(fullfile(features_folder, 'keypoint descriptors', '*.mat')); %208
 concavity_files = dir(fullfile(features_folder, 'concavity descriptors', '*.mat')); %72
-concavity_diff_files = dir(fullfile(features_folder, 'concavity distance descriptors', '*.mat'));
+concavity_diff_files = dir(fullfile(features_folder, 'concavity distance descriptors', '*.mat')); %72
+cchist_files = dir(fullfile(features_folder, 'chaincode histograms', '*.mat')); %128
 
 mkdir(output_folder);
 
@@ -19,7 +20,7 @@ mkdir(output_folder);
 test_size = 5;
 training_size = size(kp_files,1) - test_size;
 
-no_features = 469;
+no_features = 597;
 
 all_data = zeros(training_size + test_size, no_features);
 all_label = zeros(training_size + test_size, 1);
@@ -34,8 +35,9 @@ for i = 1:size(kp_files,1)
     load(fullfile(features_folder, 'concavity descriptors',concavity_files(i).name));
     conc = ft_vector;
     load(fullfile(features_folder, 'concavity distance descriptors',concavity_diff_files(i).name)); %72
+    load(fullfile(features_folder, 'chaincode histograms',cchist_files(i).name));
     
-    all_data(i,:) = [fsd, M, cc_sampled', tr, conc, ft_vector];
+    all_data(i,:) = [fsd, M, cc_sampled', tr, conc, ft_vector, cc_hist];
     
     [path, feature_file, ext] = fileparts(fsd_files(i).name);
     feature_split = strsplit(feature_file, '_');
