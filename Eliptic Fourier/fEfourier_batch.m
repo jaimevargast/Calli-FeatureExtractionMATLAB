@@ -4,7 +4,7 @@ function fEfourier_batch(directory)
 
 iNoOfHarmonicsAnalyse = 15;
 bNormaliseSizeState = 1;
-bNormaliseOrientationState = 0;
+bNormaliseOrientationState = 1;
 
 mkdir(directory,'fourier shape descriptors');
 savepath = strcat(directory,'/fourier shape descriptors/');
