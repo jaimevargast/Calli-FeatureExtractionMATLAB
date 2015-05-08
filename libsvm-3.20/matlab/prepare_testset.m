@@ -17,7 +17,7 @@ for i = 1:no_features
     min_val = min_features(i);
     max_val = max_features(i);
     if max_val ~= min_val
-        test_data(:,i) = lower + (upper - lower) .* ((test_data(:,i) - repmat(min_val,test_size,1))./(max_val - min_val));
+%         test_data(:,i) = lower + (upper - lower) .* ((test_data(:,i) - repmat(min_val,test_size,1))./(max_val - min_val));
     end
 end
 
