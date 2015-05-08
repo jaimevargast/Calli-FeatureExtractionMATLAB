@@ -22,7 +22,7 @@ function [ cc_sampled ] = polyChainCodeSampled( polygon, no_samples )
    cc = polyChainCode(P1,P2); 
    
    % sampling
-   sampling_step = length(cc) / no_samples;
+   sampling_step = floor(length(cc) / no_samples);
    cc_sampled = cc(sampling_step: sampling_step: sampling_step * no_samples);
  
 end

@@ -8,11 +8,11 @@ output_folder = '..\..\SVMData\';
 output_file = 's_synthetic_svmdata_all.txt';
 sel_features_file = '..\..\data\synthetic s\selected_features.mat';
 % svmdata_file = 's_synthetic_svmdata.txt';
-test_indices = [3, 9, 15, 21, 27];
+test_indices = [6, 12, 18, 24, 30];
 
 [all_label, all_data] = libsvmread(strcat(output_folder, output_file));
 
-all_data(:,647) = zeros(size(all_data,1),1);
+all_data(:,697) = zeros(size(all_data,1),1);
 
 all_indices = [1:length(all_label)];
 train_indices = setdiff(all_indices, test_indices);
@@ -47,17 +47,17 @@ selected_data{15} = [all_data(:,1:60), all_data(:,398:469)];
 selected_data{16} = [all_data(:,68:117), all_data(:,398:469)];
 selected_data{17} = [all_data(:,118:325), all_data(:,398:469)];
 % chaincode histogram
-selected_data{18} = all_data(:,470:597);
-selected_data{19} = [all_data(:,1:60), all_data(:,520:647)];
-selected_data{20} = [all_data(:,118:325), all_data(:,520:647)];
-selected_data{21} = [all_data(:,326:397), all_data(:,520:647)];
-selected_data{22} = [all_data(:,118:397), all_data(:,520:647)];
+selected_data{18} = all_data(:,570:697);
+selected_data{19} = [all_data(:,1:60), all_data(:,570:697)];
+selected_data{20} = [all_data(:,118:325), all_data(:,570:697)];
+selected_data{21} = [all_data(:,326:397), all_data(:,570:697)];
+selected_data{22} = [all_data(:,118:397), all_data(:,570:697)];
 % polyline chaincode
-selected_data{23} = all_data(:,470:519);
-selected_data{24} = [all_data(:,1:60), all_data(:,470:519)];
-selected_data{25} = [all_data(:,118:325), all_data(:,470:519)];
-selected_data{26} = [all_data(:,326:397), all_data(:,470:519)];
-selected_data{27} = [all_data(:,118:397), all_data(:,470:519)];
+selected_data{23} = all_data(:,470:569);
+selected_data{24} = [all_data(:,1:60), all_data(:,470:569)];
+selected_data{25} = [all_data(:,118:325), all_data(:,470:569)];
+selected_data{26} = [all_data(:,326:397), all_data(:,470:569)];
+selected_data{27} = [all_data(:,118:397), all_data(:,470:569)];
 
 
 for index = 23:length(feature_sets)

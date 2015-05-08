@@ -17,7 +17,7 @@ kp_files = dir(fullfile(features_folder, 'keypoint descriptors', '*.mat')); %208
 concavity_files = dir(fullfile(features_folder, 'concavity descriptors', '*.mat')); %72
 concavity_diff_files = dir(fullfile(features_folder, 'concavity distance descriptors', '*.mat')); %72
 cchist_files = dir(fullfile(features_folder, 'chaincode histograms', '*.mat')); %128
-ccpoly_files = dir(fullfile(features_folder, 'polyline chain code', '*.mat')); %50
+ccpoly_files = dir(fullfile(features_folder, 'polyline chain code', '*.mat')); %100
 
 mkdir(output_folder);
 
@@ -25,7 +25,7 @@ mkdir(output_folder);
 test_size = 5;
 training_size = size(kp_files,1) - test_size;
 
-no_features = 647;
+no_features = 697;
 
 all_data = zeros(training_size + test_size, no_features);
 all_label = zeros(training_size + test_size, 1);

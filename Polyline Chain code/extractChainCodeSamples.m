@@ -25,7 +25,7 @@ for f = 1:length(polys)
         if exist('smoothed_V2','var')
             
 %             P = [smoothed_V2( polygon(1).y];
-            cc_sampled = polyChainCodeSampled(smoothed_V2, 50);           
+            cc_sampled = polyChainCodeSampled(smoothed_V2, 100);           
             save(feat_saveas,'cc_sampled');
         end
     end
