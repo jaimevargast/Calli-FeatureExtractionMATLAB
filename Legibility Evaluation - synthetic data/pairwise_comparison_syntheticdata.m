@@ -36,6 +36,10 @@ for i = 1:no_pairs
     
     choice = input('select the more legibile one (press 1 or 2): ');
     pairs(pairs_indices(i),3) = choice;
+    if mod(i,50) == 0
+        display('number of tests done so far: ');
+        display(i);
+    end
     save(savepath, 'pairs', 'images_file', 'pairs_indices');
 end
 
