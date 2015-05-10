@@ -1,4 +1,4 @@
-images_dir = '..\data\synthetic k';
+images_dir = '.\data\synthetic k';
 pairwise_results_file = 'pairs_result_jaime.mat';
 
 % get the user opinion
