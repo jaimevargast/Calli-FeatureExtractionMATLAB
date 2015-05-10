@@ -4,19 +4,25 @@ function [] = pairwise_comparison_syntheticdata( images_dir, savepath )
 
 images_file = dir(fullfile(images_dir, '*.png'));
 no_pairs = nchoosek(length(images_file),2);
-pairs = zeros(no_pairs,3);
-pairs_indices = randperm(no_pairs);
 
-counter = 1;
-for i = 1:length(images_file) - 1
-    for j = i+1:length(images_file)
-        pairs(counter, 1) = i;
-        pairs(counter, 2) = j;
-        counter = counter + 1;
+if exist(savepath, 'file') == 0 % first time, beginning the test
+    pairs = zeros(no_pairs,3);
+    pairs_indices = randperm(no_pairs);
+
+    counter = 1;
+    for i = 1:length(images_file) - 1
+        for j = i+1:length(images_file)
+            pairs(counter, 1) = i;
+            pairs(counter, 2) = j;
+            counter = counter + 1;
+        end
     end
+    start = 1;
+else % after crashes, if any
+    load(savepath);
 end
 
-for i = 1:no_pairs
+for i = start:no_pairs
     
     close all
     
@@ -36,11 +42,13 @@ for i = 1:no_pairs
     
     choice = input('select the more legibile one (press 1 or 2): ');
     pairs(pairs_indices(i),3) = choice;
-    if mod(i,50) == 0
+    if mod(i,10) == 0
         display('number of tests done so far: ');
         display(i);
     end
-    save(savepath, 'pairs', 'images_file', 'pairs_indices');
+    
+    start = start + 1;
+    save(savepath, 'pairs', 'images_file', 'pairs_indices', 'start');
 end
 
 % save(savepath, 'pairs', 'images_file');
