@@ -1,4 +1,4 @@
-function [poly] = readHPGLboundary(hpgl_file_name)
+function [poly,PolySegment] = readHPGLboundary(hpgl_file_name)
 % Saves pen-up positions of specially constructed HPGL file. These
 % positions indicate the coordinates of control points ON THE BOUNDARY
 % *************************************************************************
@@ -34,24 +34,20 @@ end
 PolySegment = [PolySegment V];
 fclose(hpgl_file_handle);
 
-% Hacky resampling to match original mesh used for "S"
+
+% Resample segments uniformly and construct polygon
 poly = [];
+l = 1;
+for i = 1:size(PolySegment,2)
+    poly_aux = resamplePolyline(cell2mat(PolySegment(1,i)),100);
+    PolySegment(1,i) = {[l:l+99]'};
+    l = l+99;    
+    poly = [poly; poly_aux];
+end
 
-%top side = 7 points
-poly_aux = cell2mat(PolySegment(1));
-poly = [poly; resamplePolyline(poly_aux,7)];
-
-%right side = 13 points
-poly_aux = cell2mat(PolySegment(2));
-poly = [poly; resamplePolyline(poly_aux,13)];
-
-%bottom side = 7 points
-poly_aux = cell2mat(PolySegment(3));
-poly = [poly; resamplePolyline(poly_aux,7)];
-
-%left side = 65 points
-poly_aux = cell2mat(PolySegment(4));
-poly = [poly; resamplePolyline(poly_aux,65)];
+adj = cell2mat(PolySegment(end));
+adj(end) = 1;
+PolySegment(end) = {adj};
 
 % remove duplicate vertices
 poly = unique(poly,'rows','stable');

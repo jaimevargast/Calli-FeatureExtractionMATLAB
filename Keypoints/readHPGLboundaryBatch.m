@@ -6,17 +6,18 @@ savepath = directory;
 
 polys = dir(directory);
 
-for f = 1:length(polys)
-    smoothed_V2 = [];
+for f = 1:length(polys)    
     [pathstr,name,ext] = fileparts(polys(f).name);
     
     % Parse the hpgl file
     if(strcmp(ext,'.plt'))
         f = strcat(directory,name,ext);
-        [smoothed_V2] = readHPGLboundary(f) ;
+        [polygon,segments] = readHPGLboundary(f) ;
         feat_saveas = strcat(savepath,name,'.mat');
+        seg_saveas = strcat(savepath,name,'_seg.mat');
         % SAVE        
-        save(feat_saveas,'smoothed_V2');
+        save(feat_saveas,'polygon');
+        save(seg_saveas,'segments');
     end
 end
 
