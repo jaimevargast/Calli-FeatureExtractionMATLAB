@@ -8,7 +8,7 @@ output_folder = '..\..\SVMData\';
 output_file = 'k_synthetic_svmdata.txt';
 sel_features_file = '..\..\data\synthetic k\selected_features.mat';
 % svmdata_file = 's_synthetic_svmdata.txt';
-test_indices = [];
+test_indices = [6, 12, 18, 24, 30];
 
 [all_label, all_data] = libsvmread(strcat(output_folder, output_file));
 all_data = full(all_data);
@@ -67,7 +67,7 @@ selected_data{3} = all_data;
 % selected_data{27} = [all_data(:,111:390), all_data(:,463:562)];
 
 
-for index = 1:length(feature_sets)
+for index = 3:length(feature_sets)
     
     sel_features = FeatureSelection(selected_data{index}, all_label);
     
@@ -75,15 +75,15 @@ for index = 1:length(feature_sets)
         = prepare_trainset(selected_data{index}, all_label, train_indices);
     [test_data, test_label] = prepare_testset(selected_data{index}, all_label, ...
         test_indices, max_features, min_features);
-
+    
     [svr_model, svr_model_sel] = learnlegibility(sel_features, training_label, training_data);
     
-    [predicted_label, accuracy, decision_values] = svmpredict(training_label, ...
-        training_data, svr_model);
+    [predicted_label, accuracy, decision_values] = svmpredict(test_label, ...
+        test_data, svr_model);
     
-    training_data_selected = training_data(:, sel_features);
-    [predicted_label_selected, accuracy_selected, decision_values_selected] = svmpredict(training_label, ...
-        training_data_selected, svr_model_sel);
+    test_data_selected = test_data(:, sel_features);
+    [predicted_label_selected, accuracy_selected, decision_values_selected] = svmpredict(test_label, ...
+        test_data_selected, svr_model_sel);
     
     [predicted_label_sorted, I_predicted] = sort(predicted_label);
     [predicted_label_sel_sorted, I_predicted_sel] = sort(predicted_label_selected);
