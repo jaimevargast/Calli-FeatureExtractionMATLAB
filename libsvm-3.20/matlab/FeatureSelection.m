@@ -1,6 +1,6 @@
 function [sel_features] = FeatureSelection(all_data, all_label)
 
-param = ['-s 3 -t 2 -g ', num2str(0.5), ' -c ', num2str(0.5), ' -p 0.1 -q'];
+param = ['-s 4 -t 2 -g ', num2str(0.5), ' -c ', num2str(0.5), ' -n 0.5 -q'];
 
 % criterion
 SVRwrapper = @(training_x, training_y, test_x, test_y)...
@@ -11,7 +11,7 @@ SVRwrapper = @(training_x, training_y, test_x, test_y)...
 % otherwise, everytime you run, you get different features selected
 X = all_data;
 Y = all_label;
-[selected_features, his] = sequentialfs(SVRwrapper, X, Y, 'cv', 30);
+[selected_features, his] = sequentialfs(SVRwrapper, X, Y, 'cv', 38);
 sel_features = find(selected_features);
 
 end

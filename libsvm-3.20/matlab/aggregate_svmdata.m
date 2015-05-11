@@ -25,7 +25,7 @@ mkdir(output_folder);
 test_size = 5;
 training_size = size(kp_files,1) - test_size;
 
-no_features = 697;
+no_features = 690;
 
 all_data = zeros(training_size + test_size, no_features);
 all_label = zeros(training_size + test_size, 1);
@@ -44,7 +44,7 @@ for i = 1:size(kp_files,1)
     load(fullfile(features_folder, 'chaincode histograms',cchist_files(i).name));
     load(fullfile(features_folder, 'polyline chain code',ccpoly_files(i).name));
     
-    all_data(i,:) = [fsd, M, first_cc, tr, conc, ft_vector, cc_sampled', cc_hist];
+    all_data(i,:) = [fsd, first_cc, tr, conc, ft_vector, cc_sampled', cc_hist];
     
     [path, feature_file, ext] = fileparts(fsd_files(i).name);
     feature_split = strsplit(feature_file, '_');

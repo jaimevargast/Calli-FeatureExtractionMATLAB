@@ -7,7 +7,7 @@ polys = dir(strcat(folder,'polygons\'));
 segs = dir(strcat(folder,'segments\'));
 
 curvature = [];
-length = [];
+len = [];
 
 for f = 1:size(polys,1)
         
@@ -35,11 +35,11 @@ for f = 1:size(polys,1)
                 polygon=reversePolygon(polygon);
             end
             
-            [curvature,length] = segmentCurvatureLength(polygon,segments,25);            
+            [curvature,len] = segmentCurvatureLength(polygon,segments,25);            
             % -------------------------------------------------------------------------
             
             save(feat_saveas,'curvature');
-            save(feat2_saveas,'length');
+            save(feat2_saveas,'len');
         end
     end
     
