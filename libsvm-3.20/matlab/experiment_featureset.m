@@ -1,7 +1,7 @@
 clear all
 close all
 
-fileID = fopen('results_k_synthetic_featuresets.txt','w');
+fileID = fopen('results_k_synthetic_segments.txt','w');
 
 % initialization
 output_folder = '..\..\SVMData\';

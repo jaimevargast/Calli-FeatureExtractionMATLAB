@@ -1,4 +1,4 @@
-function [sel_features] = FeatureSelection(all_data, all_label)
+function [sel_features] = FeatureSelection(param,all_data, all_label)
 
 param = ['-s 3 -t 2 -g ', num2str(0.03), ' -c ', num2str(0.1), ' -p 0.1 -q'];
 
