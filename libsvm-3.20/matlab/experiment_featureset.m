@@ -8,7 +8,6 @@ output_folder = '..\..\SVMData\';
 output_file = 'k_synthetic_svmdata.txt';
 sel_features_file = '..\..\data\synthetic k\selected_features.mat';
 % svmdata_file = 's_synthetic_svmdata.txt';
-test_indices = [6, 12, 18, 24, 30];
 
 [all_label, all_data] = libsvmread(strcat(output_folder, output_file));
 all_data = full(all_data);
@@ -16,7 +15,15 @@ all_data = full(all_data);
 % all_data(:,104) = zeros(size(all_data,1),1);
 
 all_indices = [1:length(all_label)];
-train_indices = setdiff(all_indices, test_indices);
+size_testset = 5;
+
+all_combinations = combnk(all_indices, size_testset);
+no_combinations = size(all_combinations,1);
+combination_indices = randperm(no_combinations);
+no_testsets = 40;
+for i = 1:no_testsets
+    testsets{i} = all_combinations(combination_indices(i),:);
+end
 
 % feature_sets = {'fourier', 'chain', 'keypoints', 'concavity', 'fourier+chain', 'fourier+keypoint', 'fourier+concavity', ...
 %     'fourier+chain+concavity', 'all', 'chain+keypoint', 'chain+concavity', 'keypoint+concavity', 'chain+keypoint+concavity', ...
@@ -66,14 +73,16 @@ selected_data{3} = all_data;
 % selected_data{26} = [all_data(:,319:390), all_data(:,463:562)];
 % selected_data{27} = [all_data(:,111:390), all_data(:,463:562)];
 
+sel_features = FeatureSelection(all_data, all_label);
 
-for index = 3:length(feature_sets)
+for index = 1:length(testsets)
     
-    sel_features = FeatureSelection(selected_data{index}, all_label);
+    test_indices = testsets{index};
+    train_indices = setdiff(all_indices, test_indices);
     
     [training_data, training_label, max_features, min_features] ...
-        = prepare_trainset(selected_data{index}, all_label, train_indices);
-    [test_data, test_label] = prepare_testset(selected_data{index}, all_label, ...
+        = prepare_trainset(all_data, all_label, train_indices);
+    [test_data, test_label] = prepare_testset(all_data, all_label, ...
         test_indices, max_features, min_features);
     
     [svr_model, svr_model_sel] = learnlegibility(sel_features, training_label, training_data);
@@ -85,12 +94,14 @@ for index = 3:length(feature_sets)
     [predicted_label_selected, accuracy_selected, decision_values_selected] = svmpredict(test_label, ...
         test_data_selected, svr_model_sel);
     
+    [test_label_sorted, I_test] = sort(test_label);
     [predicted_label_sorted, I_predicted] = sort(predicted_label);
     [predicted_label_sel_sorted, I_predicted_sel] = sort(predicted_label_selected);
     
-    fprintf(fileID, '%s %f %f %f %f %f %f %d %d %d %d %d\r\n', feature_sets{index}, accuracy(2), predicted_label, I_predicted);
-    fprintf(fileID, '%s %f %f %f %f %f %f %d %d %d %d %d\r\n', ...
-        strcat(feature_sets{index},'(selected)'), accuracy_selected(2), predicted_label_selected, I_predicted_sel);
+    fprintf(fileID, 'Test set%d (ground truth), %f, %f, %f, %f, %f, %f, %d, %d, %d, %d, %d,\r\n', index, 0, test_label, I_test);
+    fprintf(fileID, 'Test set%d (all):, %f, %f, %f, %f, %f, %f, %d, %d, %d, %d, %d,\r\n', index, accuracy(2), predicted_label, I_predicted);
+    fprintf(fileID, 'Test set%d (selected):, %f, %f, %f, %f, %f, %f, %d, %d, %d, %d, %d,\r\n', ...
+        index, accuracy_selected(2), predicted_label_selected, I_predicted_sel);
 end
 
 
