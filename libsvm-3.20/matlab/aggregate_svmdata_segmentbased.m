@@ -3,15 +3,16 @@ function [] = aggregate_svmdata_segmentbased(letter, labels_file, mapping_file, 
 % clear all
 % close all
 
-labels_folder = '..\..\labels';
-features_folder = strcat('..\..\data\', letter);
-output_folder = '..\..\SVMData\';
+
+labels_folder = './labels\\';
+features_folder = strcat('./data\', letter);
+output_folder = './SVMData\';
 
 % loading lables, mapping, features
 load(fullfile(labels_folder, labels_file));
 load(fullfile(labels_folder, mapping_file));
 curvature_files = dir(fullfile(features_folder, 'segment curvature length', '*_curv.mat')); %100
-length_files = dir(fullfile(features_folder, 'segment curvature length', '*_len.mat')); %4
+length_files = dir(fullfile(features_folder, '\segment curvature length', '*_len.mat')); %4
 
 mkdir(output_folder);
 
@@ -30,6 +31,7 @@ for i = 1:size(curvature_files,1)
     load(fullfile(features_folder, 'segment curvature length',curvature_files(i).name));
     load(fullfile(features_folder, 'segment curvature length',length_files(i).name));
 %     len = length;
+    curvature = curvature;
         
     all_data(i,:) = [len, curvature];
     
