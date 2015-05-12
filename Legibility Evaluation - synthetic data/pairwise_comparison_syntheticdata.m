@@ -70,7 +70,7 @@ for i = start:no_pairs
             pairs(pairs_indices(i),3) = 1;
         end
     end
-    if mod(i,10) == 0
+    if mod(i,50) == 0
         display('number of tests done so far: ');
         display(i);
     end
