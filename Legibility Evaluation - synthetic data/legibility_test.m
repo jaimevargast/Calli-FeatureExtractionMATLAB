@@ -1,4 +1,4 @@
-images_dir = '..\data\k expanded';
+images_dir = '.\data\k expanded';
 % images_newdir = '..\data\synthetic k\new';
 pairwise_results_file = 'pairs_result_jaime_k_expanded.mat';
 
