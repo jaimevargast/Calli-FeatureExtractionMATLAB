@@ -3,8 +3,8 @@ function segmentCurvatureLength_batch(folder)
 mkdir(folder,'segment curvature length');
 savepath = strcat(folder,'/segment curvature length/');
 
-polys = dir(strcat(folder,'polygons\'));
-segs = dir(strcat(folder,'segments\'));
+polys = dir(strcat(folder,'polygons\*.mat'));
+segs = dir(strcat(folder,'segments\*.mat'));
 
 curvature = [];
 len = [];
@@ -12,13 +12,13 @@ len = [];
 for f = 1:size(polys,1)
         
     [pathstr,polyname,ext] = fileparts(polys(f).name);
-    [pathstr,segmentname,ext] = fileparts(segs(f).name);
+%    [pathstr,segmentname,ext] = fileparts(segs(f).name);
     
     % Load the polygon and segment instance
     if(strcmp(ext,'.mat'))
         
         source = strcat(folder,'polygons\',polyname,ext);
-        seg_source = strcat(folder,'segments\',segmentname,ext);
+        seg_source = strcat(folder,'segments\',polyname,'_seg',ext);
         
         feat_saveas = strcat(savepath,polyname,'_curv.mat');
         feat2_saveas = strcat(savepath,polyname,'_len.mat');
