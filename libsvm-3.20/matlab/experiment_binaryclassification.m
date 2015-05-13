@@ -5,7 +5,7 @@ close all
 
 % initialization
 output_folder = '..\..\SVMData\';
-output_file = 'k_expanded_svmdata.txt';
+output_file = 'k_expanded_svmdata_classification.txt';
 
 % read the svm data from the file
 [all_label, all_data] = libsvmread(strcat(output_folder, output_file));

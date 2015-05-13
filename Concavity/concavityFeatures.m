@@ -2,9 +2,9 @@ function concavityFeatures(directory)
     
 
 mkdir(directory,'concavity descriptors');
-savepath = strcat(directory,'/concavity descriptors/');
+savepath = strcat(directory,'\concavity descriptors\');
 
-polys = dir(strcat(directory,'polygons\'));
+polys = dir(strcat(directory,'\polygons\'));
 
 for f = 1:length(polys)
     
@@ -15,7 +15,7 @@ for f = 1:length(polys)
     % Load the polygon instance
     if(strcmp(ext,'.mat'))
         
-        source = strcat(directory,'polygons\',name,ext);
+        source = strcat(directory,'\polygons\',name,ext);
         feat_saveas = strcat(savepath,name,'_conc.mat');
         
         
@@ -25,7 +25,8 @@ for f = 1:length(polys)
             
             % Compute Features
             % -------------------------------------------------------------------------
-            P = [polygon(1).x polygon(1).y];
+%             P = [polygon(1).x polygon(1).y];
+            P = polygon;
             P = scalePoly(P);            
             [chull,bays] = extractConcavities(P);
             ft_vector = bayFeatures(chull,bays,1);
