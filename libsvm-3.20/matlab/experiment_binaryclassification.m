@@ -5,15 +5,16 @@ close all
 
 % initialization
 output_folder = '..\..\SVMData\';
-output_file = 'k_experiment_svmdata.txt';
+output_file = 'k_expanded_svmdata.txt';
 
 % read the svm data from the file
 [all_label, all_data] = libsvmread(strcat(output_folder, output_file));
 all_data = full(all_data);
 
 % get the training data, scale features
+training_indices = [1:length(all_label)];
 [training_data, training_label, max_features, min_features] ...
-    = prepare_trainset(all_data, all_label, [1:10]);
+    = prepare_trainset(all_data, all_label, training_indices);
 
 size_training = length(training_label);
 max_acc = 0;
@@ -33,7 +34,3 @@ for i = -30:2:30
         end
     end
 end
-
-max_acc
-max_gamma
-max_nu

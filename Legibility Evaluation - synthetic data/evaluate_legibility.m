@@ -1,8 +1,8 @@
-images_dir = '..\data\synthetic k';
-pairwise_results_file = 'pairs_result_zeinab.mat';
-comparisons_file = 'pairs_comparison.mat';
-scores_file = 'scores_k_synthetic.mat';
-scores_file_txt = 'scores_k_synthetic.txt';
+images_dir = '..\data\k expanded';
+% pairwise_results_file = 'pairs_result_zeinab.mat';
+comparisons_file = 'pairs_comparison_k_expanded.mat';
+scores_file = 'scores_k_expanded.mat';
+scores_file_txt = 'scores_k_expanded.txt';
 
 % get the comparison tables from user opinion
 % process_pairs_results(pairwise_results_file, comparisons_file, 0);

@@ -1,11 +1,11 @@
 clear all
 close all
 
-fileID = fopen('results_k_synthetic_segments.txt','w');
+fileID = fopen('results_k_expanded_segments.txt','w');
 
 % initialization
 output_folder = '..\..\SVMData\';
-output_file = 'k_synthetic_svmdata.txt';
+output_file = 'k_expanded_svmdata.txt';
 sel_features_file = '..\..\data\synthetic k\selected_features.mat';
 % svmdata_file = 's_synthetic_svmdata.txt';
 
@@ -20,7 +20,7 @@ size_testset = 5;
 all_combinations = combnk(all_indices, size_testset);
 no_combinations = size(all_combinations,1);
 combination_indices = randperm(no_combinations);
-no_testsets = 40;
+no_testsets = 5;
 for i = 1:no_testsets
     testsets{i} = all_combinations(combination_indices(i),:);
 end
