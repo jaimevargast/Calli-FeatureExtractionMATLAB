@@ -1,8 +1,8 @@
-images_dir = '..\data\k expanded';
+images_dir = '..\data\s expanded';
 % pairwise_results_file = 'pairs_result_zeinab.mat';
-comparisons_file = 'pairs_comparison_k_expanded.mat';
-scores_file = 'scores_k_expanded.mat';
-scores_file_txt = 'scores_k_expanded.txt';
+comparisons_file = 'pairs_comparison_s_expanded.mat';
+scores_file = 'scores_s_expanded.mat';
+scores_file_txt = 'scores_s_expanded.txt';
 
 % get the comparison tables from user opinion
 % process_pairs_results(pairwise_results_file, comparisons_file, 0);
