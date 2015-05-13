@@ -47,12 +47,12 @@ for i = 1:numel(segments)
     ix = find(tempK<0.00001);
     K(ix) = 0;
     
-    if visualize
-        labels = num2str([0; K; 0],'%.4g');
-        labels = cellstr(labels);
-        dx = 0.01; dy = 0.01;
-        drawPolyline(seg,'Color',cmap(i,:),'LineWidth',1,'Marker','*');
-        text([seg(:,1)],[seg(:,2)],labels,'FontSize',10);        
+    if visualize        
+            labels = num2str([0; K; 0],'%.4g');
+            labels = cellstr(labels);
+            dx = 0.01; dy = 0.01;            
+            drawPolyline(seg,'Color',cmap(i,:),'LineWidth',2,'Marker','*');
+            text([seg(:,1)],[seg(:,2)],labels,'FontSize',10);                
     end
     
     
