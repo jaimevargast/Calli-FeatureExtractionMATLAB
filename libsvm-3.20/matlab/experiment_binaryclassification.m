@@ -5,7 +5,7 @@ close all
 
 % initialization
 output_folder = '..\..\SVMData\';
-output_file = 'k_expanded_svmdata_classification.txt';
+output_file = 's_expanded_svmdata_classification.txt';
 
 % read the svm data from the file
 [all_label, all_data] = libsvmread(strcat(output_folder, output_file));
@@ -34,3 +34,14 @@ for i = -30:2:30
         end
     end
 end
+
+%% try on new data
+testset_file = 's_expanded_svmdata_testset.txt';
+[test_label, test_data] = libsvmread(strcat(output_folder, testset_file));
+test_data = full(test_data);
+test_label = [1; -1; 1; -1; 1];
+
+param = ['-s 2 -t 2 -g ', num2str(max_gamma), ' -n ', num2str(max_nu), ' -q'];
+classifier = svmtrain(training_label, training_data, param);
+[predicted, accuracy, dv] = svmpredict(test_label, test_data, classifier);
+
