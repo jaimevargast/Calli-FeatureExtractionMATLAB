@@ -9,7 +9,7 @@ function ft_vector = bayFeatures(chull,bays,visualize)
     end
     
     
-    ft_vector = zeros(12,6);    
+    ft_vector = zeros(12,10);    
     
 
     %Compute centroid and area of convex hull
@@ -23,11 +23,12 @@ function ft_vector = bayFeatures(chull,bays,visualize)
     H = [];     %heights
     S = [];     %solidity
     A = [];     %areas (relative to chull area)
+    COEFF = {}; %PCA coefficients (orientation)
 
     for i= 1:size(bays,2)
 
         % Compute angle of BASE for each bay Polygon
-        bay = [bays(i).x bays(i).y]; %bay polygon
+        bay = [bays(i).x bays(i).y]; %bay polygon        
         P1 = [bays(i).x(1) bays(i).y(1)]; %base from P1-P2
         P2 = [bays(i).x(end) bays(i).y(end)];
         mp = (P1+P2)./2; %base midpoint;
@@ -50,7 +51,7 @@ function ft_vector = bayFeatures(chull,bays,visualize)
             sind(theta) cosd(theta)     0
             0           0               1]);
         [M2] = transformPointsForward(tform2,M2);
-
+        
         %Compute bbox
         minx = min(M2(:,1));
         maxx = max(M2(:,1));
@@ -60,11 +61,18 @@ function ft_vector = bayFeatures(chull,bays,visualize)
             maxx miny;
             maxx maxy;
             minx maxy;]);
+        
+        %Compute PCA
+        coeff = pca(M2);
 
-        %Apply inverse transformation to Bbox
+        %Apply inverse transformation to Bbox and coeff
         bbox = transformPointsInverse(tform2,bbox);
         bbox = transformPointsInverse(tform1,bbox);
         BBOX = [BBOX; bbox];
+        
+        coeff = transformPointsInverse(tform2,coeff); %just rotation
+        COEFF{i} = coeff*(-1);
+        
 
         %Width and height of bounding box
         h = max(bbox(:,2)) - min(bbox(:,2));
@@ -118,27 +126,33 @@ function ft_vector = bayFeatures(chull,bays,visualize)
         %discard if smaller than threshold
         if ~(isempty(I))
             if (A(I)<threshold)
-                ft_vector(i,:) = [0 0 0 0 0 0];
+                ft_vector(i,:) = [0 0 0 0 0 0 0 0 0 0];
             else %selected
-                ru = [C(I,:) W(I) H(I) A(I) S(I)];
+                coeff = COEFF{I};
+                ru = [C(I,:) W(I) H(I) A(I) S(I) coeff(1,:) coeff(2,:)];
                 ft_vector(i,:) = ru;
                 
                 %Visualize
                 if(visualize)            
                     X = bays(I).x';
                     Y = bays(I).y';
-                    hold on;            
-                    patch(X,Y,'g');
                     [mpx,mpy] = pol2cart(MP(I,1),MP(I,2));
-                    [cx,cy] = pol2cart(C(I,1),C(I,2));
+                    [cx,cy] = pol2cart(C(I,1),C(I,2));                    
+                    major = [cx cy; cx+coeff(1,1) cy+coeff(1,2)];
+                    minor = [cx cy; cx+coeff(2,1) cy+coeff(2,2)];                    
+                    
+                    hold on;            
+                    patch(X,Y,'g');                    
                     scatter(mpx,mpy,'o','MarkerFaceColor','red');
                     scatter(cx,cy,'o','MarkerFaceColor','blue');
+                    drawPolyline(major,'Color','g');
+                    drawPolyline(minor,'Color','r');
                     drawPolygon(BBOX(I));
                     hold off;
                 end
             end
         else
-            ft_vector(i,:) = [0 0 0 0 0 0];
+            ft_vector(i,:) = [0 0 0 0 0 0 0 0 0 0];
         end
     end
 

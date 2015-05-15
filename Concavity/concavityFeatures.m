@@ -1,8 +1,8 @@
 function concavityFeatures(directory)
     
 
-mkdir(directory,'concavity descriptors');
-savepath = strcat(directory,'\concavity descriptors\');
+mkdir(directory,'concavity descriptors test');
+savepath = strcat(directory,'\concavity descriptors test\');
 
 polys = dir(strcat(directory,'\polygons\'));
 

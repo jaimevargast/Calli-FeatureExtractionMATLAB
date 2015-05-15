@@ -2,6 +2,10 @@ function [chull,bays] = extractConcavities(polygon)
     
     bays = {};
     
+    polygon = scalePolyConstrained(polygon);
+    
+    
+    
     % Compute Convex Hull and save it as a polygon
     K = convhull(polygon,'simplify',false);   
     chull = polygon(K,:);
