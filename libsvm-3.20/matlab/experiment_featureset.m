@@ -1,11 +1,11 @@
 clear all
 close all
 
-fileID = fopen('results_k_expanded_segments.txt','w');
+fileID = fopen('results_s_expanded_segments.txt','w');
 
 % initialization
 output_folder = '..\..\SVMData\';
-output_file = 'k_expanded_svmdata.txt';
+output_file = 's_expanded_svmdata.txt';
 % sel_features_file = '..\..\data\synthetic k\selected_features.mat';
 % svmdata_file = 's_synthetic_svmdata.txt';
 
@@ -72,9 +72,9 @@ selected_data{2} = all_data;
 % selected_data{26} = [all_data(:,319:390), all_data(:,463:562)];
 % selected_data{27} = [all_data(:,111:390), all_data(:,463:562)];
 
-for feature_index = 1:length(selected_data)
+% for feature_index = 1:length(selected_data)
     
-    sel_features = FeatureSelection(selected_data{feature_index}, all_label);
+    sel_features = FeatureSelection(selected_data{1}, all_label);
     
     for index = 1:length(testsets)
         
@@ -82,8 +82,8 @@ for feature_index = 1:length(selected_data)
         train_indices = setdiff(all_indices, test_indices);
         
         [training_data, training_label, max_features, min_features] ...
-            = prepare_trainset(selected_data{feature_index}, all_label, train_indices);
-        [test_data, test_label] = prepare_testset(selected_data{feature_index}, all_label, ...
+            = prepare_trainset(selected_data{1}, all_label, train_indices);
+        [test_data, test_label] = prepare_testset(selected_data{1}, all_label, ...
             test_indices, max_features, min_features);
         
         [svr_model, svr_model_sel] = learnlegibility(sel_features, training_label, training_data);
@@ -100,13 +100,13 @@ for feature_index = 1:length(selected_data)
         [predicted_label_sel_sorted, I_predicted_sel] = sort(predicted_label_selected);
         
         fprintf(fileID, 'Test set%d (ground truth), %f, %f, %f, %f, %f, %f, %d, %d, %d, %d, %d,\r\n', index, 0, test_label, I_test);
-        fprintf(fileID, 'Test set%d (%s):, %f, %f, %f, %f, %f, %f, %d, %d, %d, %d, %d,\r\n', index, feature_sets{feature_index}, ...
+        fprintf(fileID, 'Test set%d (%s):, %f, %f, %f, %f, %f, %f, %d, %d, %d, %d, %d,\r\n', index, feature_sets{2}, ...
             accuracy(2), predicted_label, I_predicted);
         fprintf(fileID, 'Test set%d (selected):, %f, %f, %f, %f, %f, %f, %d, %d, %d, %d, %d,\r\n', ...
             index, accuracy_selected(2), predicted_label_selected, I_predicted_sel);
     end
     
-end
+% end
 
 
 fclose(fileID);

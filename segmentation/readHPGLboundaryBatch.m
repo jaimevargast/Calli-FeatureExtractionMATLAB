@@ -11,8 +11,9 @@ for f = 1:length(polys)
     
     % Parse the hpgl file
     if(strcmp(ext,'.plt'))
-        f = strcat(directory,name,ext);
-        [polygon,segments] = readHPGLboundary(f) ;
+%     if(strcmp(ext,'.plt') && ~isempty(strfind(name, 'test')))
+        file = strcat(directory,name,ext);
+        [polygon,segments] = readHPGLboundary(file) ;
         feat_saveas = strcat(savepath,name,'.mat');
         seg_saveas = strcat(savepath,name,'_seg.mat');
         % SAVE        
