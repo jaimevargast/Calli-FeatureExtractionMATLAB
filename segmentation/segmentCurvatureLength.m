@@ -1,6 +1,11 @@
-function [profiles,lengths] = segmentCurvatureLength(polygon,segments,samplesize,visualize)
+function [profiles,lengths] = segmentCurvatureLength(polygon,segments,samplesize,visualize,reshape)
 
-profiles = [];
+if reshape
+    profiles = [];
+else
+    profiles = {};
+end
+
 lengths = [];
 
 tot_len = polygonLength(polygon);
@@ -67,6 +72,10 @@ for i = 1:numel(segments)
 %             sum_k=0;
 %         end
 %     end
-    profiles = [profiles K'];       
+    if reshape 
+        profiles = [profiles K'];       
+    else
+        profiles{i,1} = K;
+    end
 end
 end
