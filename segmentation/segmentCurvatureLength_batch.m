@@ -25,7 +25,7 @@ for f = 1:size(polys,1)
         feat2_saveas = strcat(savepath,polyname,'_len.mat');
         
         load(source);
-        load(seg_source);
+        load(seg_source);       
         
         if exist('polygon','var')
             
@@ -36,7 +36,7 @@ for f = 1:size(polys,1)
                 polygon=reversePolygon(polygon);
             end
             
-            [curvature,len] = segmentCurvatureLength(polygon,segments,25,1);            
+            [curvature,len] = segmentCurvatureLength(polygon,segments,10,1,0);            
             % -------------------------------------------------------------------------
             
             save(feat_saveas,'curvature');

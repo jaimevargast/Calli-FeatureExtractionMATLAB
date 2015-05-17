@@ -7,9 +7,9 @@ function ccw = isPolygonCCW(polygon)
     
     tot = sum([P2(:,1)-P1(:,1)].*[P2(:,2)+P1(:,2)]);
     
-    if(tot>0)
+    if(tot<0)
         ccw = 1;
     else
-        ccw = -1;
+        ccw = 0;
     end
 end

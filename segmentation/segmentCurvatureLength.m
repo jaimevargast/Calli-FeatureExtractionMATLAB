@@ -34,20 +34,7 @@ for i = 1:numel(segments)
     %Downsample
     seg = resamplePolyline(seg,samplesize+2);
     
-    %Construct line segments
-    P1 = seg;
-    P2 = circshift(seg,[-1 0]);
-    P3 = circshift(P2,[-1 0]);
-    P1((end-1):end,:) = [];
-    P2((end-1):end,:) = [];
-    P3((end-1):end,:) = [];
-    
-    %COMPUTE TURNING ANGLES
-    theta = angle3Points(P1,P2,P3);
-    theta = pi-theta;
-
-    %COMPUTE CURVATURE
-    K = (sin(theta./2)).*2;
+    K = DiscretePolylineCurvature2D(seg);
     tempK = abs(K);
     ix = find(tempK<0.00001);
     K(ix) = 0;
