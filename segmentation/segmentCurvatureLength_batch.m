@@ -1,7 +1,7 @@
 function segmentCurvatureLength_batch(folder)
 
-mkdir(folder,'segment curvature length');
-savepath = strcat(folder,'segment curvature length\');
+mkdir(folder,'segment curvature length coarse');
+savepath = strcat(folder,'segment curvature length coarse\');
 
 polys = dir(strcat(folder,'polygons\*.mat'));
 segs = dir(strcat(folder,'segments\*.mat'));
@@ -36,7 +36,7 @@ for f = 1:size(polys,1)
                 polygon=reversePolygon(polygon);
             end
             
-            [curvature,len] = segmentCurvatureLength(polygon,segments,25,1);            
+            [curvature,len] = segmentCurvatureLength(polygon,segments,10,1,0);            
             % -------------------------------------------------------------------------
             
             save(feat_saveas,'curvature');
