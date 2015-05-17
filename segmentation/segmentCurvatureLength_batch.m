@@ -25,7 +25,7 @@ for f = 1:size(polys,1)
         feat2_saveas = strcat(savepath,polyname,'_len.mat');
         
         load(source);
-        load(seg_source);
+        load(seg_source);       
         
         if exist('polygon','var')
             

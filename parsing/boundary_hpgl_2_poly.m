@@ -73,6 +73,8 @@ for i = 1:length(poly)
      end
 end
 
+fclose('all');
+
 % for i = 1:numel(poly)
 %     dum1 = [poly(i).x poly(i).y];
 %     dum2 = circshift(dum1,[-1 0]); %duplicate and offset by -1 to compute distance between vertex pairs (segment length)
