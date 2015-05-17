@@ -20,11 +20,10 @@ size_testset = 5;
 all_combinations = combnk(all_indices, size_testset);
 no_combinations = size(all_combinations,1);
 combination_indices = randperm(no_combinations);
-no_testsets = 1;
-% for i = 1:no_testsets
-%     testsets{i} = all_combinations(combination_indices(i),:);
-% end
-testsets{1} = [61:65];
+no_testsets = 5;
+for i = 1:no_testsets
+    testsets{i} = all_combinations(combination_indices(i),:);
+end
 
 % feature_sets = {'fourier', 'chain', 'keypoints', 'concavity', 'fourier+chain', 'fourier+keypoint', 'fourier+concavity', ...
 %     'fourier+chain+concavity', 'all', 'chain+keypoint', 'chain+concavity', 'keypoint+concavity', 'chain+keypoint+concavity', ...
@@ -36,7 +35,7 @@ testsets{1} = [61:65];
 
 feature_sets = {'length+curvature', 'all'};
 
-selected_data{1} = all_data(:, 1:24);
+selected_data{1} = all_data(:, 1:104);
 selected_data{2} = all_data;
 
 % fourier: 1-60; chain: 61-110; keypoints: 111-318;
@@ -73,7 +72,7 @@ selected_data{2} = all_data;
 % selected_data{26} = [all_data(:,319:390), all_data(:,463:562)];
 % selected_data{27} = [all_data(:,111:390), all_data(:,463:562)];
 
-for feature_index = 1:length(selected_data)
+% for feature_index = 1:length(selected_data)
     
     sel_features = FeatureSelection(selected_data{1}, all_label);
     
@@ -107,7 +106,7 @@ for feature_index = 1:length(selected_data)
             index, accuracy_selected(2), predicted_label_selected, I_predicted_sel);
     end
     
-end
+% end
 
 
 fclose(fileID);

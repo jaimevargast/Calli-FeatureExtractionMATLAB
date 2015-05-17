@@ -3,15 +3,15 @@ clear all
 
 % svm data file
 svmdata_dir = '..\..\SVMData';
-svmdata_file = 's_expanded_svmdata_coarse_curvature.txt';
+svmdata_file = 's_expanded_svmdata_classification.txt';
 
 % get the data and labels
 [all_label, all_data] = libsvmread(fullfile(svmdata_dir, svmdata_file));
 
 % length: 1-4, curvature: 5-104, concavity: 105-176,
 % chain hist: 177-304, fsd: 305-364
-% all_data = all_data(:,1:24);
-% all_data = [all_data(:,1:104),all_data(:,305:364)];
+% all_data = all_data(:,12373:12484);
+all_data = [all_data(:,25:84),all_data(:,12373:12484)];
 
 % prepare train and test data
 train_indices = [1:length(all_label)-5];
