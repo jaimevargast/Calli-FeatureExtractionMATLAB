@@ -11,7 +11,7 @@ lengths = [];
 tot_len = polygonLength(polygon);
 
 if visualize
-    cmap = lines(size(segments,2));
+    cmap = ['r' 'g' 'y' 'b']'; %lines(size(segments,2));
     figure;
     hold on;   
 end

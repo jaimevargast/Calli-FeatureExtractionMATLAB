@@ -1,10 +1,10 @@
 clear all;
 
-letter = './data/k expanded/';
+letter = './data/s expanded/';
 
-scores = './scores/scores_k_expanded.txt';
+scores = './scores/scores_s_expanded.txt';
 
-ft = './data/k expanded/concavity descriptors test/';
+ft = './data/s expanded/concavity descriptors test/';
 
 sc_map = dlmread(scores); %score to filename map
 

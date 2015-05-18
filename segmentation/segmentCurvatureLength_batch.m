@@ -1,7 +1,7 @@
 function segmentCurvatureLength_batch(folder)
 
-mkdir(folder,'segment curvature length coarse');
-savepath = strcat(folder,'segment curvature length coarse\');
+mkdir(folder,'segment curvature length');
+savepath = strcat(folder,'segment curvature length\');
 
 polys = dir(strcat(folder,'polygons\*.mat'));
 segs = dir(strcat(folder,'segments\*.mat'));
@@ -32,7 +32,7 @@ for f = 1:size(polys,1)
             % Compute Features
             % -------------------------------------------------------------------------
             polygon = scalePolyConstrained(polygon);
-            if ~isPolygonCCW(polygon)
+            if isPolygonCCW(polygon)
                 polygon=reversePolygon(polygon);
             end
             

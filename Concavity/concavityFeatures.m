@@ -29,7 +29,7 @@ for f = 1:length(polys)
             P = polygon;
             P = scalePoly(P);            
             [chull,bays] = extractConcavities(P);
-            ft_vector = bayFeatures(chull,bays,1,1);
+            ft_vector = bayFeatures(chull,bays,0,1);
             % -------------------------------------------------------------------------
             
             save(feat_saveas,'ft_vector');
