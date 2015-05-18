@@ -33,8 +33,8 @@ for f = 1:size(ks,1)
     
     for i=1:numel(curvature) % one cell per segment
         
-%         hd = HausdorffDist(ref_k{i},curvature{i});
-        hd = sum(norm(ref_k{i} - curvature{i}));
+        hd = HausdorffDist(ref_k{i},curvature{i});
+%         hd = norm(ref_k{i} - curvature{i});
         this_HD = [this_HD hd];
     end
     
