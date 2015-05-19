@@ -1,0 +1,43 @@
+function html_content = generateHtmlContentCSS(dir, ixmap, CSS)
+% This function is for generating a string to save into the html file to
+% visualize results
+
+% sorting
+[css_sorted, sorted_index] = sort(CSS);
+
+% css part
+html_content = ['<style type=','"text/css','"','>', ...
+    '.tg  {border-collapse:collapse;border-spacing:0;}', ...
+    '.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}',...
+    '.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}',...
+    '</style>'];
+
+% table
+html_content = [html_content, '<table class="tg">'];
+html_content = [html_content, '<tr>', ...
+    '<th class="tg-031e">', 'row', '</th>', ...
+    '<th class="tg-031e">', 'filename', '</th>', ...
+    '<th class="tg-031e">', 'image', '</th>', ...
+    '<th class="tg-031e">', 'CSS', '</th>', '</tr>'];
+
+for i = 1:length(sorted_index)
+    
+    index = sorted_index(i);
+    
+    html_content = [html_content, '<tr> ', ...
+        '<th class="tg-031e">', num2str(i), '</th> ', ...
+        '<th class="tg-031e">', ixmap{index}, '</th> '];
+    
+    html_content = [html_content, ...
+        '<th class="tg-031e">', '<img src="', ...
+        strcat(dir, ixmap{index}, '.png'), '" style="width:150px;height:150px"></th> '];
+    
+    html_content = [html_content, ...
+        '<th class="tg-031e">', num2str(CSS(index)), '</th> </tr> '];
+end
+
+html_content = [html_content, '</table> '];
+
+end
+
+
