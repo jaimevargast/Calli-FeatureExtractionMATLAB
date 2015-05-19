@@ -38,13 +38,19 @@ for f = 1:size(polys,1)
             % -------------------------------------------------------------------------
             grid_size = ceil(sqrt(size(polys,1)));
             
-            cmap = ['r'; 'y'; 'b'; 'g'; 'm'; 'k'; 'r'; 'y'];            
-            for i = 1:numel(aligned_segments)
-                figure(i);
-                subplot(grid_size,grid_size,f)
-                drawPolyline(aligned_segments{i},'Color',cmap(i,:),'LineWidth',2,'Marker','*');
-                axis equal;
-            end
+%             cmap = ['r'; 'y'; 'b'; 'g'; 'm'; 'k'; 'r'; 'y'];            
+%             for i = 1:numel(aligned_segments)
+%                 figure(i);
+%                 subplot(grid_size,grid_size,f)
+%                 drawPolyline(aligned_segments{i},'Color',cmap(i,:),'LineWidth',1,'Marker','*');
+%                 axis equal;
+%                 figure(numel(aligned_segments)+1);
+%                 subplot(grid_size,grid_size,f)
+%                 hold on;
+%                 drawPolyline(polygon(segments{i},:),'Color',cmap(i,:),'LineWidth',1,'Marker','*');
+%                 hold off;
+%                 axis equal;              
+%             end
                                     
             save(feat_saveas,'context');
             

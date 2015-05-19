@@ -1,9 +1,9 @@
 function [aligned_segments,context] = segmentShapeContext(polygon,segments,visualize)
 polygon = scalePolyConstrained(polygon);
 NR = 5; %number of rings
-NW = 12; %number of wedges
-RMIN = 0.1;
-RMAX = 1;
+NW = 8; %number of wedges
+RMIN = 0.5;
+RMAX = 2;
 mean_dist_global=[];
 
 aligned_segments = {};
